@@ -1,0 +1,31 @@
+version: '2'
+services:
+  wp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - /home/wordpress/wordpress:/var/www/html
+    networks:
+     - wpnet
+
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "True"
+      MYSQL_DATABASE: wp_db
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - /home/wordpress/mysql:/var/lib/mysql
+    networks:
+      - wpnet
+
+networks:
+  wpnet:
+
+volumes:
+  wordpress:  
+  mysql:
